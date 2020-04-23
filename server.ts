@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import indexRouter from './network/rutas';
+import Usuarios from './components/user/ruta-usuario';
 const { config } = require('./config/index');
 
 class Server {
@@ -24,7 +25,8 @@ class Server {
     }
 
     routes(){
-        this.app.use(indexRouter);
+        this.app.use('/api', indexRouter);
+        this.app.use('/api/usuario', Usuarios);
     }
 
     start(){

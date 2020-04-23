@@ -1,12 +1,25 @@
-exports.success = function (req: any, res: any, message: String, status: Number) {
-    res.status(status || 200).send(message);
+import { Request, Response } from 'express';
+
+class Respuestas {
+    
+    constructor(){
+
+    }
+
+    success(req: Request, res: Response, mensaje: any, estado: any){
+        res.status(estado || 200).send(mensaje);
+    }
+
+    error(req: Request, res: Response, mensaje: any, estado: any, detalles: String){
+        console.log('[response error] ' +  detalles);
+
+        res.status(estado || 500).send({ 
+            error: mensaje,
+            body: '',
+        });
+    }
 }
 
-exports.error = function (req: any, res: any, message: String, status: Number, details: String) {
-    console.error('[response error] ' + details);
 
-    res.status(status || 500).send({ 
-        error: message,
-        body: '',
-    });
-}
+let responder = new Respuestas();
+export default responder;

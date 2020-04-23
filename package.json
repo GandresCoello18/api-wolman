@@ -17,6 +17,7 @@
   "author": "Andres Coello Goyes",
   "license": "MIT",
   "dependencies": {
+    "@types/mysql": "^2.15.10",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
