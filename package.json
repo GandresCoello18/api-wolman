@@ -17,7 +17,10 @@
   "author": "Andres Coello Goyes",
   "license": "MIT",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.3.9",
     "@types/mysql": "^2.15.10",
+    "@types/shortid": "0.0.29",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -27,6 +30,7 @@
     "helmet": "^3.22.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
+    "shortid": "^2.2.15",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   },

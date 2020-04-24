@@ -4,6 +4,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import indexRouter from './network/rutas';
 import Usuarios from './components/user/ruta-usuario';
+import login from './components/login/ruta-login';
+
 const { config } = require('./config/index');
 
 class Server {
@@ -27,6 +29,7 @@ class Server {
     routes(){
         this.app.use('/api', indexRouter);
         this.app.use('/api/usuario', Usuarios);
+        this.app.use('/api/login', login);
     }
 
     start(){
