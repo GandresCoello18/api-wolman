@@ -13,18 +13,18 @@ class Usuario{
     }
 
     crear_usuario(req: Request, res: Response){
-        const { nombre_usuario, correo, clave, id_metodo } = req.body || null;
+        const { nombre, correo, clave, id_metodo } = req.body || null;
         
-        console.log(req.body);
 
-        Store.validar_usuario_existente(nombre_usuario, correo)
+
+        Store.validar_usuario_existente(nombre, correo)
             .then( data => {
                 if(data == 0){
 
                     encriptacion.hash(clave, 10)
                         .then(clave_encriptada => {
                             
-                            Store.insertar_usuario(nombre_usuario, correo, clave_encriptada, id_metodo)
+                            Store.insertar_usuario(nombre, correo, clave_encriptada, id_metodo)
                                 .then( data => {
                                     Respuestas.success(req, res, data, 200);
                                 }).catch( err => {
@@ -45,7 +45,7 @@ class Usuario{
     }
 
     obtener_usuario(req: Request, res: Response){
-        res.send(`Este es el id: ${req.params.id} y los datos son: ${res.locals.datos_user.clave}`);
+        res.send(`Este es el id: ${req.params.id} y los datos son: ${res.locals.datos_user.id_user}`);
     }
 
     obtener_usuarios(req: Request, res: Response){

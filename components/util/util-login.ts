@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import Respuesta from '../../network/response';
-import { decode } from 'punycode';
 const { config } = require('../../config/index');
 
 const comprobar = Router();
