@@ -15,6 +15,14 @@ class Usuario{
     crear_usuario(req: Request, res: Response){
         const { nombre, correo, clave, id_metodo } = req.body || null;
         
+        console.log(req.hostname + ' host ip');
+
+        let permisos = '';
+        if(req.hostname == '127.0.0.1'){
+            permisos = 'Estudiante';
+        }else{
+            permisos = 'Administrador';
+        }
 
 
         Store.validar_usuario_existente(nombre, correo)
@@ -24,7 +32,7 @@ class Usuario{
                     encriptacion.hash(clave, 10)
                         .then(clave_encriptada => {
                             
-                            Store.insertar_usuario(nombre, correo, clave_encriptada, id_metodo)
+                            Store.insertar_usuario(nombre, correo, clave_encriptada, id_metodo, permisos)
                                 .then( data => {
                                     Respuestas.success(req, res, data, 200);
                                 }).catch( err => {

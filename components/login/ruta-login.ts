@@ -4,6 +4,7 @@ import Store from './store-login';
 import StoreUser from '../user/store-usuario';
 import encripctacion from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+const { comprobar } = require('../util/util-login');
 const { config } = require('../../config/index');
 
 
@@ -14,6 +15,11 @@ class Login {
         this.router = Router();
         this.ruta();
     }
+
+    validar_vida_token(req: Request, res: Response){
+        console.log('validando el tiempo de vida del token, token activo');
+        Respuesta.success(req, res, {'feeback': 'Token activo'}, 200);
+    }    
 
     autenticar(req: Request, res: Response){
         const { correo,  clave}  = req.body || null;
@@ -48,19 +54,27 @@ class Login {
         Store.validar_credenciales_sociales(id, metodo)
             .then( (data: any) => {
 
+                let permisos = '';
+                if(req.hostname == '127.0.0.1'){
+                    permisos = 'Estudiante';
+                }else{
+                    permisos = 'Administrador';
+                }
+
                 let template = {
                     id_user: id,
                     nombre_usuario: user_name,
                     correo: email,
                     avatar,
-                    id_metodo_sesion: metodo 
+                    id_metodo_sesion: metodo,
+                    permisos
                 }
 
                 console.log(template);
                 const token = jwt.sign(template, config.jwtSecret);
 
                 if(data == 0){
-                    StoreUser.insertar_usuario_social(template.id_user, template.nombre_usuario, template.correo, template.avatar, template.id_metodo_sesion);
+                    StoreUser.insertar_usuario_social(template.id_user, template.nombre_usuario, template.correo, template.avatar, template.id_metodo_sesion, template.permisos);
                     Respuesta.success(req, res, {'token': token}, 201);
                 }else{
                     Respuesta.success(req, res, {'token': token}, 201);
@@ -72,6 +86,7 @@ class Login {
     }
 
     ruta(){
+        this.router.get('/autenticacion', comprobar, this.validar_vida_token);
         this.router.post('/autenticacion', this.autenticar);
         this.router.post('/autenticacion/social', this.autenticar_sociales);
     }

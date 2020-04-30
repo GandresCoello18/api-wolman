@@ -9,18 +9,18 @@ class StoreUsuario{
 
     }
 
-    async insertar_usuario(nombre_usuario: String, correo: String, clave: String, id_metodo: Number){
+    async insertar_usuario(nombre_usuario: String, correo: String, clave: String, id_metodo: Number, permisos: String){
         return await new Promise( (resolve, reject) => {
-            database.query(`INSERT INTO usuarios_app (id_user, nombre_usuario, correo, clave, avatar, id_metodo_sesion, confir, fecha_registro) VALUES ('${id.generate()}', '${nombre_usuario}', '${correo}', '${clave}', '---', ${id_metodo}, 0, '${fechas.fecha_actual()}')`, (err, data) => {
+            database.query(`INSERT INTO usuarios_app (id_user, nombre_usuario, correo, clave, avatar, id_metodo_sesion, confir, fecha_registro, permisos) VALUES ('${id.generate()}', '${nombre_usuario}', '${correo}', '${clave}', 'http://127.0.01:4000/static/imagen/avatar/hombre-0.jpg', ${id_metodo}, 0, '${fechas.fecha_actual()}', '${permisos}')`, (err, data) => {
                 if(err) return reject(err);
                 resolve(data);
             });
         });
     }
 
-    async insertar_usuario_social(id_user: String, nombre: String, correo: String = 'null', avatar: String = 'null', metodo: Number){
+    async insertar_usuario_social(id_user: String, nombre: String, correo: String = 'null', avatar: String = 'null', metodo: Number, permisos: String){
         return await new Promise( (resolve, reject) => {
-            database.query(`INSERT INTO usuarios_app (id_user, nombre_usuario, correo, clave, avatar, id_metodo_sesion, confir, fecha_registro) VALUES ('${id_user}', '${nombre}', '${correo}', 'null', '${avatar}', ${metodo}, 1, '${fechas.fecha_actual()}')`, (err, data) => {
+            database.query(`INSERT INTO usuarios_app (id_user, nombre_usuario, correo, clave, avatar, id_metodo_sesion, confir, fecha_registro, permisos) VALUES ('${id_user}', '${nombre}', '${correo}', 'null', '${avatar}', ${metodo}, 1, '${fechas.fecha_actual()}', '${permisos}')`, (err, data) => {
                 if(err) return reject(err);
                 resolve(data);
             });
