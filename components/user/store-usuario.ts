@@ -45,6 +45,24 @@ class StoreUsuario{
         });
     }
 
+    async consulta_usuario(id: String){
+        return await new Promise( (resolve, reject) => {
+            database.query(`SELECT * FROM usuarios_app WHERE id_user = '${id}' `, (err, data) => {
+                if(err) return reject(err);
+                resolve(data);
+            });
+        });
+    }
+
+    async mis_datos_user(id_user: String){
+        return await new Promise( (resolve, reject) => {
+            database.query(`SELECT id_user, avatar, nombre_usuario FROM usuarios_app WHERE id_user = '${id_user}' `, (err, data) => {
+                if(err) return reject(err);
+                resolve(data);
+            });
+        });
+    }
+
 
 
 }

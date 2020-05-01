@@ -53,7 +53,14 @@ class Usuario{
     }
 
     obtener_usuario(req: Request, res: Response){
-        res.send(`Este es el id: ${req.params.id} y los datos son: ${res.locals.datos_user.id_user}`);
+        const { id } = req.params || null;
+
+        Store.mis_datos_user(id)
+            .then( info => {
+                Respuestas.success(req, res, info, 200);
+            }).catch( err => {
+                Respuestas.error(req, res, err, 500, 'error en pedir datos unico user');
+            });
     }
 
     obtener_usuarios(req: Request, res: Response){
@@ -74,9 +81,20 @@ class Usuario{
 
     }
 
+    mis_datos_generales(req: Request, res: Response){
+    
+        Store.mis_datos_user(res.locals.datos_user.id_user)
+            .then( info => {
+                Respuestas.success(req, res, info, 200);
+            }).catch( err => {
+                Respuestas.error(req, res, err, 500, 'error en pedir mis datos user');
+            });
+    }
+
     ruta(){
+        this.router.get('/mis-datos', comprobar, this.mis_datos_generales)
         this.router.get('/', this.obtener_usuarios);
-        this.router.get('/:id', comprobar, this.obtener_usuario);
+        this.router.get('/:id', this.obtener_usuario);
         this.router.post('/', this.crear_usuario);
     }
 }

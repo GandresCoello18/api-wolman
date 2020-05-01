@@ -9,9 +9,10 @@ comprobar.use( (req: Request, res: Response, next: NextFunction) => {
     const token: String | any = req.headers['access-token'];
         console.log(token);
         
-        if (token) {
+        if (token){
             jwt.verify(token, config.jwtSecret, (err: any, decoded: any) => {      
                 if (err) {    
+                    console.log(err);
                     Respuesta.success(req, res, {"feeback": 'Token inválida o expirada'}, 200);
                 } else {
                     console.log(decoded);

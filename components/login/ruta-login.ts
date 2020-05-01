@@ -32,7 +32,7 @@ class Login {
                 }else{
                     if(await encripctacion.compare(clave, data[0].clave)){
 
-                        let datos = { id_user: data[0].id_user, correo, clave: data[0].clave };
+                        let datos = { id_user: data[0].id_user };
                         const token = jwt.sign(datos, config.jwtSecret);
 
                         Respuesta.success(req, res, {'token': token}, 200);
@@ -71,7 +71,8 @@ class Login {
                 }
 
                 console.log(template);
-                const token = jwt.sign(template, config.jwtSecret);
+                let datos = { id_user: template.id_user };
+                const token = jwt.sign( datos, config.jwtSecret);
 
                 if(data == 0){
                     StoreUser.insertar_usuario_social(template.id_user, template.nombre_usuario, template.correo, template.avatar, template.id_metodo_sesion, template.permisos);
